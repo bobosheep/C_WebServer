@@ -9,10 +9,11 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <netinet/in.h>
+#include <arpa/inet.h>
 #include "handleHttp.h"
 
 #define HOST_PORT 9994
-
+#define IP_LENGTH 16
 
 
 void StartUp(int* socketfd, const short port, struct sockaddr_in* server, int server_size);
@@ -21,9 +22,11 @@ void StartUp(int* socketfd, const short port, struct sockaddr_in* server, int se
 int main()
 {
     int socketfd, status;
-    struct sockaddr_in server, client;
+    struct sockaddr_in server, client, *tmp;
+    struct in_addr ipAddress;
     socklen_t sockSize;
     int newSocket, nbyte, pid;
+    char clientIp[IP_LENGTH];
 
     StartUp(&socketfd, HOST_PORT, &server, sizeof(server));
     //signal(SIGCLD, SIG_IGN);
@@ -32,6 +35,8 @@ int main()
     {
         sockSize = sizeof(client);
         newSocket = accept(socketfd, (struct sockaddr *)&client, &sockSize);
+
+
         if(newSocket == -1)
         {
             fprintf(stderr, "Accept Error");
@@ -44,6 +49,10 @@ int main()
             exit(3);
         else if(!pid)
         {//child process
+
+            ipAddress = client.sin_addr;
+            inet_ntop(AF_INET, &ipAddress, clientIp, IP_LENGTH);
+            printf("[%s] ", clientIp);
             close(socketfd);
             //fprintf(stdout, "Handling...\n");
             HandleRequest(newSocket);

@@ -8,8 +8,11 @@
 #include <netinet/in.h>
 #include "handleHttp.h"
 
+/**     DEFINITION      **/
 #define BUFFER_SIZE 8192
 
+
+/**     TYPE DEFINITION      **/
 enum METHOD
 {
     ERROR = 0,
@@ -22,6 +25,9 @@ struct FILETYPE
     char* filetype;
     char* contentType;
 }; 
+
+
+/**     GLOBAL VARIABLE      **/
 FileType extFileType [] =   {   {"html", "text/html"}, {"htm", "text/html"},\
                                 {"js", "application/javascript"}, {"css", "text/css"}, \
                                 {"jpeg", "image/jpeg"}, {"jpg", "image/jpeg"}, \
@@ -43,13 +49,25 @@ void HandleRequest(int socketfd)
     
     method = RequestMethod(buff, res);
     
+    switch(method)
+    {
+        case 0:
+            printf("Undefine Method");
+            break;
+        case 1:
+            printf("GET ");
+            break;
+        case 2:
+            printf("POST ");
+            break;
+    }
 
     for(i = 4, j = 0 ; buff[i] != ' ' ; i++, j++)
     {
         action[j] = buff[i];
     }
     action[j] = '\0';
-    printf("action is %s\n", action);
+    printf("%s\n", action);
 
 
     HandleAction(socketfd, method, action);
