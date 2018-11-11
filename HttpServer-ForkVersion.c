@@ -12,8 +12,9 @@
 #include <arpa/inet.h>
 #include "handleHttp.h"
 
-#define HOST_PORT 9994
-#define IP_LENGTH 16
+#define HOST_PORT   9994
+#define MAX_LISTEN  20 
+#define IP_LENGTH   16
 
 
 void StartUp(int* socketfd, const short port, struct sockaddr_in* server, int server_size);
@@ -73,9 +74,12 @@ int main()
 }
 
 
+
 void StartUp(int* socketfd, const short port, struct sockaddr_in* server, int server_size)
 {
     int res;
+
+    /**     Create Socket       **/
     *socketfd = socket(AF_INET, SOCK_STREAM, 0);
     if(*socketfd == -1)
     {
@@ -83,10 +87,13 @@ void StartUp(int* socketfd, const short port, struct sockaddr_in* server, int se
         return;
     }
     fprintf(stdout, "Socket create success! Socketfd is %d\n",*socketfd);
+   
+    /**     Socket Setting      **/
     server->sin_family = AF_INET;
     server->sin_addr.s_addr = htonl(INADDR_ANY);
     server->sin_port = htons(port);
 
+    /**     Socket Binding      **/
     res = bind(*socketfd, (struct sockaddr* )server, server_size);
     if(res == -1)
     {
@@ -94,7 +101,9 @@ void StartUp(int* socketfd, const short port, struct sockaddr_in* server, int se
         exit(3);
     }
     fprintf(stdout, "Bind success!\n");
-    res = listen(*socketfd, 5);
+
+    /**     Start Listening Port        **/
+    res = listen(*socketfd, MAX_LISTEN);
     if(res == -1)
     {
         perror("listen");
@@ -103,6 +112,7 @@ void StartUp(int* socketfd, const short port, struct sockaddr_in* server, int se
     fprintf(stdout, "Listening...\n");
 
 
+    /**     Finish      **/
     return;
 }
 
