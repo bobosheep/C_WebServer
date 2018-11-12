@@ -37,6 +37,8 @@ int main()
     StartUp(&socketfd, HOST_PORT, &server, sizeof(server));
     //signal(SIGCLD, SIG_IGN);
 
+
+    /**     Initialize      **/
     maxfd = socketfd;
     maxidx = -1;
     for(i = 0 ; i < __FD_SETSIZE ; i++)
@@ -46,6 +48,7 @@ int main()
 
     FD_ZERO(&allSet);
     FD_SET(socketfd, &allSet);
+
 
     while(1)
     {
@@ -149,7 +152,7 @@ void StartUp(int* socketfd, const short port, struct sockaddr_in* server, int se
         perror("listen");
         exit(3);
     }
-    fprintf(stdout, "Listening...\n");
+    fprintf(stdout, "Listening on port %d...\n", port);
 
 
     /**     Finish      **/

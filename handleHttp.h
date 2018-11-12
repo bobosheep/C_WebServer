@@ -25,7 +25,10 @@ void HandleRequest(int socketfd);
 Method RequestMethod(char* request,const int size);
 //Get the request method, only support GET and POST currently
 
-void HandleAction(int socketfd, Method action, char* request_url);
+int GetContentLength(char* request, const int size);
+//get content length
+
+void HandleAction(int socketfd, Method action, char* request_url, char* dataInfo);
 //Do the request action
 
 void WriteHeader(int socketfd, int status, char* contentType);

@@ -12,7 +12,7 @@
 #include <arpa/inet.h>
 #include "handleHttp.h"
 
-#define HOST_PORT   9994
+#define HOST_PORT   8888
 #define MAX_LISTEN  20 
 #define IP_LENGTH   16
 
@@ -109,7 +109,7 @@ void StartUp(int* socketfd, const short port, struct sockaddr_in* server, int se
         perror("listen");
         exit(3);
     }
-    fprintf(stdout, "Listening...\n");
+    fprintf(stdout, "Listening on port %d...\n", port);
 
 
     /**     Finish      **/
