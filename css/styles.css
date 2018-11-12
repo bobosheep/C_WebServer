@@ -25,7 +25,7 @@ footer{
 }
 
 .imgblock > img {
-    width: 80%;
+    width: 65%;
     margin-left: auto;
     margin-right: auto;
     height: 100%;
@@ -38,7 +38,8 @@ footer{
 }
 
 section.container{
-    width: 80%;
+    background-color: #202020a8;
+    width: 100%;
     height: 73%;
     margin-left: auto;
     margin-right: auto;
@@ -46,9 +47,9 @@ section.container{
 #left-control{
     background-color : #ffffff00;
     position: absolute;
-    left:15%;
+    left:0;
     width: 20%;
-    height: 73%;
+    height: 71%;
 }
 #left-control:hover{
     background-color: #ffffff7a;
@@ -56,9 +57,9 @@ section.container{
 #right-control{
     background-color : #ffffff00;
     position: absolute;
-    right: 15%;
+    right: 0;
     width: 20%;
-    height: 73%;
+    height: 71%;
 }
 #right-control:hover{
     background-color: #ffffff7a;
