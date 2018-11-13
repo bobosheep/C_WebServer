@@ -73,7 +73,7 @@ void HandleRequest(int socketfd)
 
     memcpy(dataInfo, &buff[res - content_length], content_length);
     dataInfo[content_length] = '\0';
-    printf("data info is %s\n", dataInfo);
+    //printf("data info is %s\n", dataInfo);
 
     HandleAction(socketfd, method, action, dataInfo);
 
